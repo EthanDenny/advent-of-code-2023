@@ -1,4 +1,5 @@
 mod day1;
+mod day2;
 
 use chrono::Datelike;
 use std::env;
@@ -32,11 +33,13 @@ fn main() {
 
     let answer1 = match day {
         1 => day1::answer1(&input),
+        2 => day2::answer1(&input),
         _ => 0
     };
 
     let answer2 = match day {
         1 => day1::answer2(&input),
+        2 => day2::answer2(&input),
         _ => 0
     };
 
