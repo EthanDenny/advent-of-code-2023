@@ -1,9 +1,9 @@
-pub fn answer1(input: &Vec<String>) -> String {
+pub fn answer1(input: &Vec<String>) -> i32 {
     let matches = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
     get_calibration(input, &matches, &to_char)
 }
 
-pub fn answer2(input: &Vec<String>) -> String {
+pub fn answer2(input: &Vec<String>) -> i32 {
     let matches = [
         "1", "2", "3", "4", "5", "6", "7", "8", "9",
         "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
@@ -11,7 +11,7 @@ pub fn answer2(input: &Vec<String>) -> String {
     get_calibration(input, &matches, &to_digit)
 }
 
-fn get_calibration(input: &Vec<String>, matches: &[&str], conversion: &dyn Fn(&str) -> char) -> String {
+fn get_calibration(input: &Vec<String>, matches: &[&str], conversion: &dyn Fn(&str) -> char) -> i32 {
     let mut sum: u32 = 0;
 
     for line in input {
@@ -41,7 +41,7 @@ fn get_calibration(input: &Vec<String>, matches: &[&str], conversion: &dyn Fn(&s
         sum += digit2.to_digit(10).unwrap();
     }
 
-    sum.to_string()
+    sum as i32
 }
 
 fn to_char(s: &str) -> char{

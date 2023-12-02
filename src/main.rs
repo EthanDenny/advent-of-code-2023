@@ -13,11 +13,18 @@ fn read_lines(day: i32) -> Vec<String> {
 }
 
 fn main() {
+    let date = chrono::Utc::now().day() as i32;
+
     let day: i32 = {
         if let Some(arg) = env::args().nth(1) {
-            arg.parse().unwrap()
+            let arg = arg.parse().unwrap();
+            if arg > date {
+                panic!("It isn't Day {arg} yet!");
+            } else {
+                arg
+            }
         } else {
-            chrono::Utc::now().day() as i32
+            date
         }
     };
 
@@ -25,12 +32,12 @@ fn main() {
 
     let answer1 = match day {
         1 => day1::answer1(&input),
-        _ => String::from("Day not found")
+        _ => 0
     };
 
     let answer2 = match day {
         1 => day1::answer2(&input),
-        _ => String::from("Day not found")
+        _ => 0
     };
 
     println!("Answer 1: {answer1}");
