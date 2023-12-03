@@ -1,7 +1,8 @@
 mod day1;
 mod day2;
+mod day3;
 
-use chrono::Datelike;
+use chrono::{Datelike, FixedOffset};
 use std::env;
 use std::fs;
 
@@ -17,12 +18,14 @@ fn get_answers(input: Vec<String>, day: i32) -> (i32, i32) {
     match day {
         1 => day1::answers(input),
         2 => day2::answers(input),
+        3 => day3::answers(input),
         _ => unimplemented!()
     }
 }
 
 fn main() {
-    let date = chrono::Utc::now().day() as i32;
+    let eastern = FixedOffset::west_opt(5 * 3600).unwrap();
+    let date = chrono::Utc::now().with_timezone(&eastern).day() as i32;
 
     let day: i32 = {
         if let Some(arg) = env::args().nth(1) {
