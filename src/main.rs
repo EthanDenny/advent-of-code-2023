@@ -1,14 +1,15 @@
 mod day1;
 mod day2;
+mod day3;
 
-use chrono::Datelike;
+use chrono::{Datelike, FixedOffset, Utc};
 use std::env;
 use std::fs;
 
 // Adapted from the documentation
 fn read_lines(day: i32) -> Vec<String> {
     let path = format!("input/day{day}.txt");
-    let message = format!("Couldn't open input for day {day}");
+    let message = format!("Couldn't open input for Day {day}");
 
     fs::read_to_string(&path).expect(&message).lines().map(String::from).collect()
 }
@@ -17,12 +18,14 @@ fn get_answers(input: Vec<String>, day: i32) -> (i32, i32) {
     match day {
         1 => day1::answers(input),
         2 => day2::answers(input),
+        3 => day3::answers(input),
         _ => unimplemented!()
     }
 }
 
 fn main() {
-    let date = chrono::Utc::now().day() as i32;
+    let eastern = FixedOffset::west_opt(5 * 3600).unwrap();
+    let date = Utc::now().with_timezone(&eastern).day() as i32;
 
     let day: i32 = {
         if let Some(arg) = env::args().nth(1) {
