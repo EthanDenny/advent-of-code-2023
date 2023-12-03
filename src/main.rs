@@ -31,18 +31,12 @@ fn main() {
 
     let input = read_lines(day);
 
-    let answer1 = match day {
-        1 => day1::answer1(&input),
-        2 => day2::answer1(&input),
-        _ => 0
+    let (ans1, ans2) = match day {
+        1 => day1::answers(&input),
+        2 => day2::answers(&input),
+        _ => unimplemented!(),
     };
 
-    let answer2 = match day {
-        1 => day1::answer2(&input),
-        2 => day2::answer2(&input),
-        _ => 0
-    };
-
-    println!("Answer 1: {answer1}");
-    println!("Answer 2: {answer2}");
+    println!("Answer 1: {ans1}");
+    println!("Answer 2: {ans2}");
 }
