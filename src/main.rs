@@ -13,6 +13,14 @@ fn read_lines(day: i32) -> Vec<String> {
     fs::read_to_string(&path).expect(&message).lines().map(String::from).collect()
 }
 
+fn get_answers(input: Vec<String>, day: i32) -> (i32, i32) {
+    match day {
+        1 => day1::answers(input),
+        2 => day2::answers(input),
+        _ => unimplemented!()
+    }
+}
+
 fn main() {
     let date = chrono::Utc::now().day() as i32;
 
@@ -30,12 +38,7 @@ fn main() {
     };
 
     let input = read_lines(day);
-
-    let (ans1, ans2) = match day {
-        1 => day1::answers(&input),
-        2 => day2::answers(&input),
-        _ => unimplemented!(),
-    };
+    let (ans1, ans2) = get_answers(input, day);
 
     println!("Answer 1: {ans1}");
     println!("Answer 2: {ans2}");

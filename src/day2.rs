@@ -2,7 +2,7 @@ const MAX_RED: i32 = 12;
 const MAX_BLUE: i32 = 13;
 const MAX_GREEN: i32 = 14;
 
-pub fn answers(input: &Vec<String>) -> (i32, i32) {
+pub fn answers(input: Vec<String>) -> (i32, i32) {
     let ans1 = input.iter()
         .map(|game: &String| check_valid(game))
         .sum();
