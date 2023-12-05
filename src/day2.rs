@@ -3,60 +3,43 @@ const MAX_BLUE: i32 = 13;
 const MAX_GREEN: i32 = 14;
 
 pub fn answers(input: Vec<String>) -> (i32, i32) {
-    let ans1 = input.iter()
-        .map(|game: &String| check_valid(game))
-        .sum();
+    let mut ans1 = 0;
+    let mut ans2 = 0;
 
-    let ans2 = input.iter()
-        .map(|game: &String| get_power(game))
-        .sum();
+    for game in input {
+        let colon_index: usize = game.find(":").unwrap();
+
+        let mut id = (&game[5..colon_index]).parse().unwrap();
+        let mut min_red = 0;
+        let mut min_blue = 0;
+        let mut min_green = 0;
+
+        for subset in (&game[colon_index+2..]).split("; ") {
+            for cube in subset.split(", ") {
+                let space_index = cube.find(" ").unwrap();
+
+                let count: i32 = (&cube[..space_index]).parse().unwrap();
+                let colour: &str = &cube[space_index+1..];
+
+                match colour {
+                    "red" => if count > MAX_RED { id = 0; }
+                    "blue" => if count > MAX_BLUE { id = 0; }
+                    "green" => if count > MAX_GREEN { id = 0; }
+                    _ => {}
+                }
+
+                match colour {
+                    "red" => if count > min_red { min_red = count; }
+                    "blue" => if count > min_blue { min_blue = count; }
+                    "green" => if count > min_green { min_green = count; }
+                    _ => {}
+                }
+            }
+        }
+
+        ans1 += id;
+        ans2 += min_red * min_blue * min_green;
+    }
 
     (ans1, ans2)
-}
-
-fn check_valid(game: &String) -> i32 {
-    let mut id = (&game[5..game.find(":").unwrap()]).parse().unwrap();
-
-    iterate_over_game(game, |count: i32, colour: &str| (
-        match colour {
-            "red" => if count > MAX_RED { id = 0; }
-            "blue" => if count > MAX_BLUE { id = 0; }
-            "green" => if count > MAX_GREEN { id = 0; }
-            _ => {}
-        }
-    ));
-
-    id
-}
-
-fn get_power(game: &String) -> i32 {
-    let mut min_red = 0;
-    let mut min_blue = 0;
-    let mut min_green = 0;
-
-    iterate_over_game(game, |count: i32, colour: &str| (
-        match colour {
-            "red" => if count > min_red { min_red = count; }
-            "blue" => if count > min_blue { min_blue = count; }
-            "green" => if count > min_green { min_green = count; }
-            _ => {}
-        }
-    ));
-
-    min_red * min_blue * min_green
-}
-
-fn iterate_over_game<F: FnMut(i32, &str) -> ()>(game: &str, mut f: F) {
-    let colon_index: usize = game.find(":").unwrap();
-
-    for subset in (&game[colon_index+2..]).split("; ") {
-        for cube in subset.split(", ") {
-            let space_index = cube.find(" ").unwrap();
-
-            let count: i32 = (&cube[..space_index]).parse().unwrap();
-            let colour: &str = &cube[space_index+1..];
-
-            f(count, colour);
-        }
-    }
 }
