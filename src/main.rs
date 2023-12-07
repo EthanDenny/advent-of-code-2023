@@ -2,6 +2,7 @@ mod day1;
 mod day2;
 mod day3;
 mod day4;
+mod day5;
 mod day6;
 mod day7;
 
@@ -17,14 +18,24 @@ fn read_lines(day: i32) -> Vec<String> {
     fs::read_to_string(&path).expect(&message).lines().map(String::from).collect()
 }
 
-fn get_answers(input: Vec<String>, day: i32) -> (i32, i32) {
+macro_rules! convert_ans_to_string {
+    ($ans:expr) => { 
+        {
+            let ans = $ans;
+            (ans.0.to_string(), ans.1.to_string())
+        }
+    };
+}
+
+fn get_answers(input: Vec<String>, day: i32) -> (String, String) {
     match day {
-        1 => day1::answers(input),
-        2 => day2::answers(input),
-        3 => day3::answers(input),
-        4 => day4::answers(input),
-        6 => day6::answers(input),
-        7 => day7::answers(input),
+        1 => convert_ans_to_string!(day1::answers(input)),
+        2 => convert_ans_to_string!(day2::answers(input)),
+        3 => convert_ans_to_string!(day3::answers(input)),
+        4 => convert_ans_to_string!(day4::answers(input)),
+        5 => convert_ans_to_string!(day5::answers(input)),
+        6 => convert_ans_to_string!(day6::answers(input)),
+        7 => convert_ans_to_string!(day7::answers(input)),
         _ => unimplemented!()
     }
 }
