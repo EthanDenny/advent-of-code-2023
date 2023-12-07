@@ -3,6 +3,7 @@ mod day2;
 mod day3;
 mod day4;
 mod day6;
+mod day7;
 
 use chrono::{Datelike, FixedOffset, Utc};
 use std::env;
@@ -23,6 +24,7 @@ fn get_answers(input: Vec<String>, day: i32) -> (i32, i32) {
         3 => day3::answers(input),
         4 => day4::answers(input),
         6 => day6::answers(input),
+        7 => day7::answers(input),
         _ => unimplemented!()
     }
 }
