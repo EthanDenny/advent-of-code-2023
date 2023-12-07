@@ -2,9 +2,7 @@ use std::collections::HashMap;
 use std::cmp::Ordering;
 
 pub fn answers(input: Vec<String>) -> (i32, i32) {
-    let ans2 = 0;
-
-    let mut ordered_cards = input
+    let mut hands = input
         .iter()
         .map(|e| {
             let parts: Vec<&str> = e.split(' ').collect();
@@ -14,15 +12,19 @@ pub fn answers(input: Vec<String>) -> (i32, i32) {
         })
         .collect::<Vec<(&str, i32)>>();
     
-    ordered_cards.sort_by(|a, b| rank_hands(b.0, a.0, true));
-    
-    let ans1 = ordered_cards
-        .iter()
-        .enumerate()
-        .map(|e| (e.0 as i32 + 1) * e.1.1)
-        .sum();
+    let ans1 = get_hand_sum(&mut hands, false);
+    let ans2 = get_hand_sum(&mut hands, true);
 
     (ans1, ans2)
+}
+
+fn get_hand_sum(hands: &mut Vec<(&str, i32)>, jokers_low: bool) -> i32 {
+    hands.sort_by(|a, b| rank_hands(b.0, a.0, jokers_low));
+    
+    hands.iter()
+        .enumerate()
+        .map(|e| (e.0 as i32 + 1) * e.1.1)
+        .sum()
 }
 
 fn rank_hands(hand_a: &str, hand_b: &str, jokers_low: bool) -> Ordering {
