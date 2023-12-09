@@ -6,6 +6,7 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 
 use chrono::{Datelike, FixedOffset, Utc};
 use std::env;
@@ -38,6 +39,7 @@ fn get_answers(input: Vec<String>, day: i32) -> (String, String) {
         6 => convert_ans_to_string!(day6::answers(input)),
         7 => convert_ans_to_string!(day7::answers(input)),
         8 => convert_ans_to_string!(day8::answers(input)),
+        9 => convert_ans_to_string!(day9::answers(input)),
         _ => unimplemented!()
     }
 }
